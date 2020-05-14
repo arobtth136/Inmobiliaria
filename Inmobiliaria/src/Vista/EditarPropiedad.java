@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.PropiedadesController;
 import Modelo.Propiedades;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author reymi
  */
 public class EditarPropiedad extends javax.swing.JFrame {
+    PropiedadesController controller = new PropiedadesController();
     private Propiedades propiedad;
     private int IdEmpleado;
     PreparedStatement ps;
@@ -223,7 +225,13 @@ public class EditarPropiedad extends javax.swing.JFrame {
         //El usuario da enter, se busca el ID y se muestra el nombre
         if("".equals(this.TxtEmpleado.getText())){
             //obtenemos el nombre
-            IdEmpleado = Integer.parseInt(TxtEmpleado.getText());
+            String nombre = controller.GetNombreEmpleado(Integer.parseInt(TxtEmpleado.getText()));
+            if(nombre == null){
+                JOptionPane.showMessageDialog(null, "Este ID no existe");
+            } else {
+                IdEmpleado = Integer.parseInt(TxtEmpleado.getText());
+                TxtEmpleado.setText(nombre);
+            }
         }
     }//GEN-LAST:event_TxtEmpleadoKeyPressed
 
@@ -253,6 +261,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(EditarPropiedad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

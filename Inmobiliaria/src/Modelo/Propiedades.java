@@ -1,23 +1,29 @@
 package Modelo;
 
-public class Propiedades {
+import java.util.ArrayList;
+
+
+public class Propiedades{
     private int ID;
     private String Direccion;
     private String Tipo;
     private String Tamaño;
     private double Precio;
     private double PrecioAlquiler;
-
+    private String Empleado;
+    private ArrayList<Integer> Dueños;
+    private String Estado;
     public Propiedades() {
     }
 
-    public Propiedades(int ID, String Direccion, String Tipo, String Tamaño, double Precio, double PrecioAlquiler) {
+    public Propiedades(int ID, String Direccion, String Tipo, String Tamaño, double Precio, double PrecioAlquiler, String Empleado) {
         this.ID = ID;
         this.Direccion = Direccion;
         this.Tipo = Tipo;
         this.Tamaño = Tamaño;
         this.Precio = Precio;
         this.PrecioAlquiler = PrecioAlquiler;
+        this.Empleado = Empleado;
     }
 
     public int getID() {
@@ -68,8 +74,27 @@ public class Propiedades {
         this.PrecioAlquiler = PrecioAlquiler;
     }
 
+    public String getEmpleado() {
+        return Empleado;
+    }
 
+    public void setEmpleado(String Empleado) {
+        this.Empleado = Empleado;
+    }
 
+    public ArrayList getDueños() {
+        return Dueños;
+    }
+
+    public void setDueños(ArrayList<Integer> Dueños) {
+        this.Dueños = Dueños;
+    }
     
-    
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }    
 }

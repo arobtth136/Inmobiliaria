@@ -63,7 +63,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         btnPropAlta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPropAlta.setForeground(new java.awt.Color(255, 255, 255));
-        btnPropAlta.setText("Alta / Baja");
+        btnPropAlta.setText("Gestionar");
         btnPropAlta.setContentAreaFilled(false);
 
         btnClientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -148,7 +148,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnVendConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(btnVendAlta)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);

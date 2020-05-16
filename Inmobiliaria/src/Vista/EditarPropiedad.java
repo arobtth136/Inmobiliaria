@@ -7,6 +7,7 @@ package Vista;
 
 import Controlador.PropiedadesController;
 import Modelo.Propiedades;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -17,21 +18,39 @@ import javax.swing.JOptionPane;
  * @author reymi
  */
 public class EditarPropiedad extends javax.swing.JFrame {
+
     PropiedadesController controller = new PropiedadesController();
     private Propiedades propiedad;
     private int IdEmpleado;
     PreparedStatement ps;
     Statement st;
     ResultSet rs;
+
     /**
      * Creates new form EditarPropiedad
      */
     public EditarPropiedad() {
         initComponents();
     }
-    public void SetPropiedad(Propiedades propiedad){
+
+    public void SetPropiedad(Propiedades propiedad) {
         this.propiedad = propiedad;
     }
+    
+    public void Cargar(){
+        //imagen
+        TxtEmpleado.setText(propiedad.getEmpleado());
+        PrecioVenta.setText(String.valueOf(propiedad.getPrecio()));
+        PrecioRenta.setText(String.valueOf(propiedad.getPrecioAlquiler()));
+        Direccion.setText(propiedad.getDireccion());
+        //Cargar categoria
+        Categorias = controller.CargarCategorias(Categorias);
+        Categorias.setSelectedItem(propiedad.getTipo());
+        Tamaño.setText(propiedad.getTamaño());
+        //Obtener el ID del empleado
+        IdEmpleado = controller.GetIdEmpleado(propiedad.getEmpleado());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,7 +69,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
         PrecioRenta = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Area = new javax.swing.JTextArea();
+        Direccion = new javax.swing.JTextArea();
         Categorias = new javax.swing.JComboBox<>();
         Tamaño = new javax.swing.JTextField();
         BtnGuardar = new javax.swing.JButton();
@@ -58,6 +77,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         background.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -76,7 +96,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
         TxtEmpleado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TxtEmpleado.setToolTipText("Empleado");
-        TxtEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        TxtEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         TxtEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TxtEmpleadoKeyPressed(evt);
@@ -98,12 +118,11 @@ public class EditarPropiedad extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Precio de renta");
 
-        Area.setColumns(20);
-        Area.setRows(5);
-        Area.setToolTipText("Dirección");
-        jScrollPane1.setViewportView(Area);
+        Direccion.setColumns(20);
+        Direccion.setRows(5);
+        Direccion.setToolTipText("Dirección");
+        jScrollPane1.setViewportView(Direccion);
 
-        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Categorias.setToolTipText("Categoría");
 
         Tamaño.setToolTipText("Tamaño m2");
@@ -206,10 +225,18 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         //Guardar los cambios
-        if(!"".equals(TxtEmpleado.getText())){
-            if(!"".equals(PrecioVenta.getText())){
-                if(!"".equals(PrecioRenta.getText())){
-                    
+        if (!"".equals(TxtEmpleado.getText())) {
+            if (!"".equals(PrecioVenta.getText())) {
+                if (!"".equals(PrecioRenta.getText())) {
+                    if(!"".equals(Direccion.getText())){
+                        if(!"".equals(Tamaño.getText())){
+                            controller.GuardarCambios(Image, PrecioVenta, PrecioRenta, Direccion, Categorias, Tamaño, IdEmpleado, propiedad.getID());
+                        } else {
+                            JOptionPane.showMessageDialog(null, "El tamaño no debe estár vacío");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La dirección no debe estár vacía");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "El precio de renta no debe estar vacío");
                 }
@@ -223,14 +250,16 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
     private void TxtEmpleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtEmpleadoKeyPressed
         //El usuario da enter, se busca el ID y se muestra el nombre
-        if("".equals(this.TxtEmpleado.getText())){
-            //obtenemos el nombre
-            String nombre = controller.GetNombreEmpleado(Integer.parseInt(TxtEmpleado.getText()));
-            if(nombre == null){
-                JOptionPane.showMessageDialog(null, "Este ID no existe");
-            } else {
-                IdEmpleado = Integer.parseInt(TxtEmpleado.getText());
-                TxtEmpleado.setText(nombre);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(this.TxtEmpleado.getText())) {
+                //obtenemos el nombre
+                String nombre = controller.GetNombreEmpleado(Integer.parseInt(TxtEmpleado.getText()));
+                if (nombre == null) {
+                    JOptionPane.showMessageDialog(null, "Este ID no existe");
+                } else {
+                    IdEmpleado = Integer.parseInt(TxtEmpleado.getText());
+                    TxtEmpleado.setText(nombre);
+                }
             }
         }
     }//GEN-LAST:event_TxtEmpleadoKeyPressed
@@ -270,17 +299,13 @@ public class EditarPropiedad extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea Area;
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnImagen;
     private javax.swing.JComboBox<String> Categorias;
+    private javax.swing.JTextArea Direccion;
     private javax.swing.JPanel Image;
     private javax.swing.JTextField PrecioRenta;
     private javax.swing.JTextField PrecioVenta;

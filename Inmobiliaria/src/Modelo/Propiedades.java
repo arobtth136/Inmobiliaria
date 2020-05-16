@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.ArrayList;
+
 
 public class Propiedades{
     private int ID;
@@ -9,7 +11,7 @@ public class Propiedades{
     private double Precio;
     private double PrecioAlquiler;
     private String Empleado;
-    private String [] Dueños;
+    private ArrayList<Integer> Dueños;
     private String Estado;
     public Propiedades() {
     }
@@ -80,11 +82,11 @@ public class Propiedades{
         this.Empleado = Empleado;
     }
 
-    public String[] getDueños() {
+    public ArrayList getDueños() {
         return Dueños;
     }
 
-    public void setDueños(String[] Dueños) {
+    public void setDueños(ArrayList<Integer> Dueños) {
         this.Dueños = Dueños;
     }
     

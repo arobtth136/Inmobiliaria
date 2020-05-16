@@ -6,15 +6,25 @@
 
 package Vista;
 
+import Controlador.PropiedadesController;
+import Modelo.Propiedades;
+import java.util.ArrayList;
+import javax.swing.ListSelectionModel;
+
 /**
  *
  * @author reymi
  */
 public class ConsultaPropiedad extends javax.swing.JFrame {
+    PropiedadesController controller = new PropiedadesController();
+    ArrayList<Propiedades> propiedades;
 
     /** Creates new form ConsultaPropiedad */
     public ConsultaPropiedad() {
         initComponents();
+        propiedades = controller.CargarPropiedades();
+        TablaDatos = controller.CargarTabla(TablaDatos);
+        TablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     /** This method is called from within the constructor to
@@ -33,6 +43,10 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         Vendidas = new javax.swing.JRadioButton();
         Renta = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaDatos = new javax.swing.JTable();
+        BtnEditar = new javax.swing.JButton();
+        BtnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,23 +74,82 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Consulta de propiedades");
 
+        TablaDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Dirección", "Tipo", "Costo de venta", "Costo de renta", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaDatos.getTableHeader().setReorderingAllowed(false);
+        TablaDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaDatosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaDatos);
+        if (TablaDatos.getColumnModel().getColumnCount() > 0) {
+            TablaDatos.getColumnModel().getColumn(0).setResizable(false);
+            TablaDatos.getColumnModel().getColumn(1).setResizable(false);
+            TablaDatos.getColumnModel().getColumn(2).setResizable(false);
+            TablaDatos.getColumnModel().getColumn(3).setResizable(false);
+            TablaDatos.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        BtnEditar.setText("Editar");
+        BtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditarActionPerformed(evt);
+            }
+        });
+
+        BtnNuevo.setText("Nueva");
+
         javax.swing.GroupLayout BackgroundLayout = new javax.swing.GroupLayout(Background);
         Background.setLayout(BackgroundLayout);
         BackgroundLayout.setHorizontalGroup(
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(BackgroundLayout.createSequentialGroup()
-                        .addComponent(Disponibles)
+                        .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(Vendidas)
-                        .addGap(18, 18, 18)
-                        .addComponent(Renta)))
-                .addContainerGap(297, Short.MAX_VALUE))
+                        .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(BackgroundLayout.createSequentialGroup()
+                                .addComponent(Disponibles)
+                                .addGap(18, 18, 18)
+                                .addComponent(Vendidas)
+                                .addGap(18, 18, 18)
+                                .addComponent(Renta)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(BackgroundLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnNuevo)
+                            .addComponent(BtnEditar))
+                        .addGap(36, 36, 36))))
         );
         BackgroundLayout.setVerticalGroup(
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +163,15 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
                         .addComponent(Vendidas)
                         .addComponent(Renta))
                     .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(520, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                    .addGroup(BackgroundLayout.createSequentialGroup()
+                        .addComponent(BtnEditar)
+                        .addGap(52, 52, 52)
+                        .addComponent(BtnNuevo)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,6 +191,18 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
     private void DisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisponiblesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DisponiblesActionPerformed
+
+    private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
+        // TODO add your handling code here:
+        EditarPropiedad editar = new EditarPropiedad();
+        editar.SetPropiedad(propiedades.get(TablaDatos.getSelectedRow()));
+        editar.Cargar();
+        editar.setVisible(true);
+    }//GEN-LAST:event_BtnEditarActionPerformed
+
+    private void TablaDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDatosMouseClicked
+        // TODO add your handling code here:¿
+    }//GEN-LAST:event_TablaDatosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -148,12 +241,16 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
+    private javax.swing.JButton BtnEditar;
+    private javax.swing.JButton BtnNuevo;
     private javax.swing.JTextField Buscar;
     private javax.swing.JRadioButton Disponibles;
     private javax.swing.ButtonGroup Filtros;
     private javax.swing.JRadioButton Renta;
+    private javax.swing.JTable TablaDatos;
     private javax.swing.JRadioButton Vendidas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -7,11 +7,16 @@ package Vista;
 
 import Controlador.PropiedadesController;
 import Modelo.Propiedades;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -25,6 +30,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
     PreparedStatement ps;
     Statement st;
     ResultSet rs;
+    ConsultaPropiedad consulta = new ConsultaPropiedad();
 
     /**
      * Creates new form EditarPropiedad
@@ -36,8 +42,8 @@ public class EditarPropiedad extends javax.swing.JFrame {
     public void SetPropiedad(Propiedades propiedad) {
         this.propiedad = propiedad;
     }
-    
-    public void Cargar(){
+
+    public void Cargar() {
         //imagen
         TxtEmpleado.setText(propiedad.getEmpleado());
         PrecioVenta.setText(String.valueOf(propiedad.getPrecio()));
@@ -78,6 +84,11 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         background.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -135,6 +146,11 @@ public class EditarPropiedad extends javax.swing.JFrame {
         });
 
         BtnImagen.setText("Cambiar Imagen");
+        BtnImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnImagenActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Tamaño m2");
 
@@ -228,8 +244,8 @@ public class EditarPropiedad extends javax.swing.JFrame {
         if (!"".equals(TxtEmpleado.getText())) {
             if (!"".equals(PrecioVenta.getText())) {
                 if (!"".equals(PrecioRenta.getText())) {
-                    if(!"".equals(Direccion.getText())){
-                        if(!"".equals(Tamaño.getText())){
+                    if (!"".equals(Direccion.getText())) {
+                        if (!"".equals(Tamaño.getText())) {
                             controller.GuardarCambios(Image, PrecioVenta, PrecioRenta, Direccion, Categorias, Tamaño, IdEmpleado, propiedad.getID());
                         } else {
                             JOptionPane.showMessageDialog(null, "El tamaño no debe estár vacío");
@@ -263,6 +279,31 @@ public class EditarPropiedad extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_TxtEmpleadoKeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        consulta.ActualizarTabla();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void BtnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnImagenActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, JPEG, PNG", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filter);
+        File file;
+        int returnVal = fileChooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            Toolkit tool = Toolkit.getDefaultToolkit();
+            Image image = tool.getImage(fileChooser.getCurrentDirectory().toString());
+            
+            
+        }
+    }//GEN-LAST:event_BtnImagenActionPerformed
+    
+    public void GetVentanaConsulta(ConsultaPropiedad consulta) {
+        this.consulta = consulta;
+        System.out.println(consulta.toString());
+    }
 
     /**
      * @param args the command line arguments

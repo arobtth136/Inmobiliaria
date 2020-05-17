@@ -21,7 +21,6 @@ public class NuevaPropiedad extends javax.swing.JFrame {
      */
     public NuevaPropiedad() {
         initComponents();
-        
     }
 
     /**

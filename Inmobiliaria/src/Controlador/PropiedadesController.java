@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -33,7 +35,7 @@ public class PropiedadesController extends Conexion {
     Statement consulta;
     ResultSet rs;
     PreparedStatement ps;
-    ArrayList<Propiedades> propiedades = new ArrayList<>();
+    ArrayList<Propiedades> propiedades = new ArrayList<>(); 
 
     public ArrayList<Propiedades> CargarPropiedades() {
         try {
@@ -83,7 +85,7 @@ public class PropiedadesController extends Conexion {
         return propiedades;
     }
 
-    public JTable CargarTabla(JTable tabla) {
+    public JTable CargarTabla(JTable tabla, ArrayList<Propiedades> propiedades) {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Dirección");
         modelo.addColumn("Tipo");
@@ -160,6 +162,7 @@ public class PropiedadesController extends Conexion {
             statement.setInt(7, IdPropiedad);
             statement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Propiedad Actualizada");
+            
         } catch (SQLException ex) {
             Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }

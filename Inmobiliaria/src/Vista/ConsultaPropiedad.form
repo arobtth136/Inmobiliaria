@@ -61,6 +61,8 @@
                                   <Component id="Vendidas" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="Renta" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="Todas" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -89,6 +91,7 @@
                           <Component id="Disponibles" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Vendidas" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Renta" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Todas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="Buscar" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -137,6 +140,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Vendidas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VendidasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="Renta">
           <Properties>
@@ -148,6 +154,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="En renta"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RentaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -208,9 +217,6 @@
                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TablaDatosMouseClicked"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -226,6 +232,23 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Nueva"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnNuevoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="Todas">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="Filtros"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Todas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TodasActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

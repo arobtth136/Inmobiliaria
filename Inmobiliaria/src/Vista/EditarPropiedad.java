@@ -44,10 +44,11 @@ public class EditarPropiedad extends javax.swing.JFrame {
     }
 
     public void Cargar() {
-        //imagen
+        lblEstado.setText(propiedad.getEstado());
         TxtEmpleado.setText(propiedad.getEmpleado());
         PrecioVenta.setText(String.valueOf(propiedad.getPrecio()));
         PrecioRenta.setText(String.valueOf(propiedad.getPrecioAlquiler()));
+        TablaPropietarios = controller.CargarPropietarios(TablaPropietarios, propiedad);
         Direccion.setText(propiedad.getDireccion());
         //Cargar categoria
         Categorias = controller.CargarCategorias(Categorias);
@@ -67,7 +68,6 @@ public class EditarPropiedad extends javax.swing.JFrame {
     private void initComponents() {
 
         background = new javax.swing.JPanel();
-        Image = new javax.swing.JPanel();
         TxtEmpleado = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         PrecioVenta = new javax.swing.JTextField();
@@ -79,8 +79,10 @@ public class EditarPropiedad extends javax.swing.JFrame {
         Categorias = new javax.swing.JComboBox<>();
         Tamaño = new javax.swing.JTextField();
         BtnGuardar = new javax.swing.JButton();
-        BtnImagen = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TablaPropietarios = new javax.swing.JTable();
+        lblEstado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -91,19 +93,6 @@ public class EditarPropiedad extends javax.swing.JFrame {
         });
 
         background.setBackground(new java.awt.Color(255, 255, 255));
-
-        Image.setToolTipText("Imagen");
-
-        javax.swing.GroupLayout ImageLayout = new javax.swing.GroupLayout(Image);
-        Image.setLayout(ImageLayout);
-        ImageLayout.setHorizontalGroup(
-            ImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        ImageLayout.setVerticalGroup(
-            ImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 180, Short.MAX_VALUE)
-        );
 
         TxtEmpleado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         TxtEmpleado.setToolTipText("Empleado");
@@ -145,14 +134,23 @@ public class EditarPropiedad extends javax.swing.JFrame {
             }
         });
 
-        BtnImagen.setText("Cambiar Imagen");
-        BtnImagen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnImagenActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Tamaño m2");
+
+        TablaPropietarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(TablaPropietarios);
+
+        lblEstado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblEstado.setText("Estado");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -160,41 +158,45 @@ public class EditarPropiedad extends javax.swing.JFrame {
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
-                    .addComponent(Image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(backgroundLayout.createSequentialGroup()
-                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(BtnGuardar))
-                                .addGap(18, 18, 18)
-                                .addComponent(Tamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4))
-                            .addComponent(BtnImagen))
-                        .addGap(0, 4, Short.MAX_VALUE))
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnGuardar))
+                        .addGap(18, 18, 18)
+                        .addComponent(Tamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4))
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(PrecioVenta)
-                            .addComponent(PrecioRenta))
+                            .addComponent(TxtEmpleado)
+                            .addComponent(PrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(jLabel2)))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(PrecioRenta, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEstado))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(lblEstado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TxtEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
@@ -206,23 +208,17 @@ public class EditarPropiedad extends javax.swing.JFrame {
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PrecioRenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnImagen)
-                        .addGap(30, 30, 30))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, Short.MAX_VALUE)))
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addGap(102, 102, 102)))
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Tamaño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(51, 51, 51)
                         .addComponent(BtnGuardar)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGap(76, 76, 76))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,7 +242,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
                 if (!"".equals(PrecioRenta.getText())) {
                     if (!"".equals(Direccion.getText())) {
                         if (!"".equals(Tamaño.getText())) {
-                            controller.GuardarCambios(Image, PrecioVenta, PrecioRenta, Direccion, Categorias, Tamaño, IdEmpleado, propiedad.getID());
+                            controller.GuardarCambios(PrecioVenta, PrecioRenta, Direccion, Categorias, Tamaño, IdEmpleado, propiedad.getID());
                         } else {
                             JOptionPane.showMessageDialog(null, "El tamaño no debe estár vacío");
                         }
@@ -284,25 +280,9 @@ public class EditarPropiedad extends javax.swing.JFrame {
         // TODO add your handling code here:
         consulta.ActualizarTabla();
     }//GEN-LAST:event_formWindowClosed
-
-    private void BtnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnImagenActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, JPEG, PNG", "jpg", "jpeg", "png");
-        fileChooser.setFileFilter(filter);
-        File file;
-        int returnVal = fileChooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            Toolkit tool = Toolkit.getDefaultToolkit();
-            Image image = tool.getImage(fileChooser.getCurrentDirectory().toString());
-            
-            
-        }
-    }//GEN-LAST:event_BtnImagenActionPerformed
     
     public void GetVentanaConsulta(ConsultaPropiedad consulta) {
         this.consulta = consulta;
-        System.out.println(consulta.toString());
     }
 
     /**
@@ -344,12 +324,11 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGuardar;
-    private javax.swing.JButton BtnImagen;
     private javax.swing.JComboBox<String> Categorias;
     private javax.swing.JTextArea Direccion;
-    private javax.swing.JPanel Image;
     private javax.swing.JTextField PrecioRenta;
     private javax.swing.JTextField PrecioVenta;
+    private javax.swing.JTable TablaPropietarios;
     private javax.swing.JTextField Tamaño;
     private javax.swing.JTextField TxtEmpleado;
     private javax.swing.JPanel background;
@@ -358,5 +337,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblEstado;
     // End of variables declaration//GEN-END:variables
 }

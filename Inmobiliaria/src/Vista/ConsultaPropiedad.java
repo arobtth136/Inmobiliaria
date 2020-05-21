@@ -9,27 +9,28 @@ import Controlador.PropiedadesController;
 import Modelo.Propiedades;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author reymi
  */
-public class ConsultaPropiedad extends javax.swing.JFrame {
-
+public class ConsultaPropiedad extends javax.swing.JPanel {
     PropiedadesController controller = new PropiedadesController();
     ArrayList<Propiedades> propiedades;
 
     /**
-     * Creates new form ConsultaPropiedad
+     * Creates new form NewJPanel
      */
     public ConsultaPropiedad() {
         initComponents();
-        propiedades = controller.CargarPropiedades();
-        TablaDatos = controller.CargarTabla(TablaDatos, propiedades);
-        TablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
+    
+    public JPanel GetPanel(){
+        return this;
+    }
+    
     public void ActualizarTabla() {
         this.propiedades.clear();
         this.propiedades = controller.CargarPropiedades();
@@ -47,7 +48,6 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Filtros = new javax.swing.ButtonGroup();
         Background = new javax.swing.JPanel();
         Buscar = new javax.swing.JTextField();
         Disponibles = new javax.swing.JRadioButton();
@@ -60,14 +60,11 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         BtnNuevo = new javax.swing.JButton();
         Todas = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         Background.setBackground(new java.awt.Color(255, 255, 255));
 
         Buscar.setToolTipText("Buscar propiedad");
 
         Disponibles.setBackground(new java.awt.Color(255, 255, 255));
-        Filtros.add(Disponibles);
         Disponibles.setText("Disponibles");
         Disponibles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +73,6 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         });
 
         Vendidas.setBackground(new java.awt.Color(255, 255, 255));
-        Filtros.add(Vendidas);
         Vendidas.setText("Vendidas");
         Vendidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +81,6 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         });
 
         Renta.setBackground(new java.awt.Color(255, 255, 255));
-        Filtros.add(Renta);
         Renta.setText("En renta");
         Renta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,13 +119,6 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         });
         TablaDatos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(TablaDatos);
-        if (TablaDatos.getColumnModel().getColumnCount() > 0) {
-            TablaDatos.getColumnModel().getColumn(0).setResizable(false);
-            TablaDatos.getColumnModel().getColumn(1).setResizable(false);
-            TablaDatos.getColumnModel().getColumn(2).setResizable(false);
-            TablaDatos.getColumnModel().getColumn(3).setResizable(false);
-            TablaDatos.getColumnModel().getColumn(4).setResizable(false);
-        }
 
         BtnEditar.setText("Editar");
         BtnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +135,6 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         });
 
         Todas.setBackground(new java.awt.Color(255, 255, 255));
-        Filtros.add(Todas);
         Todas.setText("Todas");
         Todas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +165,7 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(BackgroundLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtnNuevo)
                             .addComponent(BtnEditar))
@@ -199,7 +186,7 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
                     .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                     .addGroup(BackgroundLayout.createSequentialGroup()
                         .addComponent(BtnEditar)
                         .addGap(52, 52, 52)
@@ -208,18 +195,18 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void DisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisponiblesActionPerformed
@@ -235,32 +222,18 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         TablaDatos.updateUI();
     }//GEN-LAST:event_DisponiblesActionPerformed
 
-    private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
+    private void VendidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VendidasActionPerformed
         // TODO add your handling code here:
-        EditarPropiedad editar = new EditarPropiedad();
-        editar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        editar.SetPropiedad(propiedades.get(TablaDatos.getSelectedRow()));
-        editar.Cargar();
-        editar.GetVentanaConsulta(this);
-        System.out.println(this.toString());
-        editar.setVisible(true);
-    }//GEN-LAST:event_BtnEditarActionPerformed
-
-    private void BtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoActionPerformed
-        // TODO add your handling code here:
-        NuevaPropiedad nueva = new NuevaPropiedad();
-        nueva.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        nueva.setVisible(true);
-    }//GEN-LAST:event_BtnNuevoActionPerformed
-
-    private void TodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TodasActionPerformed
-        // TODO add your handling code here:
-        this.propiedades.clear();
-        this.propiedades = controller.CargarPropiedades();
-        this.TablaDatos = controller.CargarTabla(TablaDatos, propiedades);
+        ArrayList<Propiedades> Venta = new ArrayList<>();
+        for(Propiedades propiedad : propiedades){
+            if(propiedad.getEstado().equals("Vendida")){
+                Venta.add(propiedad);
+            }
+        }
+        this.TablaDatos = controller.CargarTabla(TablaDatos, Venta);
         TablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablaDatos.updateUI();
-    }//GEN-LAST:event_TodasActionPerformed
+    }//GEN-LAST:event_VendidasActionPerformed
 
     private void RentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentaActionPerformed
         // TODO add your handling code here:
@@ -275,53 +248,33 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
         TablaDatos.updateUI();
     }//GEN-LAST:event_RentaActionPerformed
 
-    private void VendidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VendidasActionPerformed
+    private void BtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarActionPerformed
         // TODO add your handling code here:
-        ArrayList<Propiedades> Venta = new ArrayList<>();
-        for(Propiedades propiedad : propiedades){
-            if(propiedad.getEstado().equals("Vendida")){
-                Venta.add(propiedad);
-            }
-        }
-        this.TablaDatos = controller.CargarTabla(TablaDatos, Venta);
+        EditarPropiedad editar = new EditarPropiedad();
+        editar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        editar.SetPropiedad(propiedades.get(TablaDatos.getSelectedRow()));
+        editar.Cargar();
+        editar.GetVentanaConsulta(this);
+        editar.setVisible(true);
+    }//GEN-LAST:event_BtnEditarActionPerformed
+
+    private void BtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoActionPerformed
+        // TODO add your handling code here:
+        NuevaPropiedad nueva = new NuevaPropiedad();
+        nueva.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nueva.GetVentanaConsulta(this);
+        nueva.setVisible(true);
+    }//GEN-LAST:event_BtnNuevoActionPerformed
+
+    private void TodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TodasActionPerformed
+        // TODO add your handling code here:
+        this.propiedades.clear();
+        this.propiedades = controller.CargarPropiedades();
+        this.TablaDatos = controller.CargarTabla(TablaDatos, propiedades);
         TablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablaDatos.updateUI();
-    }//GEN-LAST:event_VendidasActionPerformed
+    }//GEN-LAST:event_TodasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultaPropiedad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultaPropiedad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultaPropiedad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultaPropiedad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaPropiedad().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -329,7 +282,6 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
     private javax.swing.JButton BtnNuevo;
     private javax.swing.JTextField Buscar;
     private javax.swing.JRadioButton Disponibles;
-    private javax.swing.ButtonGroup Filtros;
     private javax.swing.JRadioButton Renta;
     private javax.swing.JTable TablaDatos;
     private javax.swing.JRadioButton Todas;
@@ -337,5 +289,4 @@ public class ConsultaPropiedad extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
 }

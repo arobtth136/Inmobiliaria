@@ -11,7 +11,7 @@ public class Propiedades{
     private double Precio;
     private double PrecioAlquiler;
     private String Empleado;
-    private ArrayList<Integer> Dueños;
+    private ArrayList<String> Dueños;
     private String Estado;
     public Propiedades() {
     }
@@ -82,11 +82,11 @@ public class Propiedades{
         this.Empleado = Empleado;
     }
 
-    public ArrayList getDueños() {
+    public ArrayList<String> getDueños() {
         return Dueños;
     }
 
-    public void setDueños(ArrayList<Integer> Dueños) {
+    public void setDueños(ArrayList<String> Dueños) {
         this.Dueños = Dueños;
     }
     

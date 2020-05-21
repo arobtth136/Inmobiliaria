@@ -107,31 +107,31 @@ INSERT INTO cliente (idCliente,Nombre,Direccion,Telefono,Dni)
 
 #Inserccion propiedad
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('1','Calle Ignacio Rayon no.934, Col.Lazaro Cardenas','Bodega','6900m^2','1405450.00','14000.00','1');
+	VALUES('1','Calle Ignacio Rayon no.934, Col.Lazaro Cardenas','Bodega Industrial','6900m^2','1405450.00','14000.00','1');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('2','Av. 20 de Nov. no. 881 esq. Aldama, Col.Centro Tuxtepec.','Apartamento','614m^2','700000.00','8000.00','2');
+	VALUES('2','Av. 20 de Nov. no. 881 esq. Aldama, Col.Centro Tuxtepec.','Apartamento','90m^2','700000.00','8000.00','2');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
 	VALUES('3','Av. 20 de Noviembre no. 1178, Col.Centro','Apartamento','630m^2','1800000.00','14000.000','3');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('4','Av. 5 de Mayo no. 1226, Col.Centro Tuxtepec','Apartamento','480m^2','1600000.00','18000.00','4');
+	VALUES('4','Av. 5 de Mayo no. 1226, Col.Centro Tuxtepec','Apartamento','100m^2','1600000.00','18000.00','4');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('5','Av. Independencia s/n ext. del Mercado Central esq. Benito Juarez, Centro Tuxtepec','Casa','2000m^2','2500000.00','15000.00','5');
+	VALUES('5','Av. Independencia s/n ext. del Mercado Central esq. Benito Juarez, Centro Tuxtepec','Casa','400m^2','2500000.00','15000.00','5');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('6','Matamoros no 85 esq. 20 de Noviembre, Centro Tuxtepec','Casa','23500m^2','19000000.00','45000.00','6');
+	VALUES('6','Matamoros no 85 esq. 20 de Noviembre, Centro Tuxtepec','Residencia','535m^2','19000000.00','45000.00','6');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
 	VALUES('7','Av. 20 de Noviembre no 1320	Centro Tuxtepec','Casa','300m^2','1100000.00','9000.00','7');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('8','Calle Ocampo no. 254, Col.Centro Tuxtepec','Apartamento','700m^2','1700000.00','10000.00','8');
+	VALUES('8','Calle Ocampo no. 254, Col.Centro Tuxtepec','Apartamento','108.50m^2','1700000.00','10000.00','8');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('9','Av.Independencia no. 678, Col. Centro','Residencia','9000m^2','9000000.00','14000.00','9');
+	VALUES('9','Av.Independencia no. 678, Col. Centro','Residencia','900m^2','9000000.00','14000.00','9');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
 	VALUES('10','av. Independencia n0.677, Col. La Piragua Tuxtepec','Bodega','3700m^2','3700000.00','18000.00','10');
@@ -152,16 +152,16 @@ INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,i
 	VALUES('15','Prol.5 de Mayo no.786, Col.5 de Mayo Tuxtepec','Bodega','1700m^2','1700000.00','10000.00','4');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('16','Av. Libertad no. 495, Col.Centro Tuxtepec','Apartamento','2402m^2','2402000.00','12000.00','5');
+	VALUES('16','Av. Libertad no. 495, Col.Centro Tuxtepec','Bodega Industrial','6402m^2','2402000.00','12000.00','5');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('17','Av. 5 no. 1186 a, Fracc. Costa verde','Casa','7600m^2','7600000.00','25000.00','6');
+	VALUES('17','Av. 5 no. 1186 a, Fracc. Costa verde','Casa','800m^2','7600000.00','25000.00','6');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('18','Av. 5 no.1186-b, Fracc. Costa Verde','Casa','5803m^2','5803000.00','18000.00','7');
+	VALUES('18','Av. 5 no.1186-b, Fracc. Costa Verde','Bodega Industrial','5803m^2','5803000.00','18000.00','7');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('19','Av. 20 de Noviembre esq. Juarez, Col. Centro Tuxtepec.','Apartamento','2492m^2','2492000.00','13000.00','8');
+	VALUES('19','Av. 20 de Noviembre esq. Juarez, Col. Centro Tuxtepec.','Terreno','2492m^2','2492000.00','13000.00','8');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
 	VALUES('20','Av. Independencia n0.670, Col. Centro Tuxtepec','Casa','180m^2','800000.00','8000.00','9');
@@ -170,31 +170,31 @@ INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,i
 	VALUES('21','Calle Benito Juarez no.495, Col.Lazaro Cardenas.','Apartamento','150m^2','750000.00','14000.00','10');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('22','Av. Independencia 918, Centro, Veracruz','Casa','3500m^2','3500000.00','10000.00','11');
+	VALUES('22','Av. Independencia 918, Centro, Veracruz','Casa','261m^2','3500000.00','10000.00','11');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
 	VALUES('23','Av Independencia 565-a, Centro, Veracruz','Apartamento','150m^2','650000.00','7000.00','1');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('24','Calle Matamoros no. 325, Col.Centro Tuxtepec.Oax.','Casa','18000m^2','18000000.00','30000.00','2');
+	VALUES('24','Calle Matamoros no. 325, Col.Centro Tuxtepec.Oax.','Bodega Industrial','2000m^2','18000000.00','30000.00','2');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('25','Calle Riva Palacios no. 465, Col. la Piragua Tuxtepec','Apartamento','35000m^2','35000000.00','50000.00','3');
+	VALUES('25','Calle Riva Palacios no. 465, Col. la Piragua Tuxtepec','Apartamento','345.50m^2','3500000.00','5000.00','3');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('26','Av. 20 de Noviembre no. 1291, Col. Centro Tuxtepec','Casa','4500m^2','4500000.00','15000.00','4');
+	VALUES('26','Av. 20 de Noviembre no. 1291, Col. Centro Tuxtepec','Casa','450m^2','4500000.00','15000.00','4');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('27','5 de Mayo 1038, Centro, Veracruz','Apartamento','350m^2','800000.00','9000.00','5');
+	VALUES('27','5 de Mayo 1038, Centro, Veracruz','Apartamento','150m^2','800000.00','9000.00','5');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('28','Independencia 748, Centro, Veracruz','Casa','3500m^2','3500000.00','10000.00','6');
+	VALUES('28','Independencia 748, Centro, Veracruz','Casa','320m^2','3500000.00','10000.00','6');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('29','Av. 20 de Noviembre no. 963, Col. Centro Tuxtepec','Apartamento','230m^2','750000.00','15000.00','7');
+	VALUES('29','Av. 20 de Noviembre no. 963, Col. Centro Tuxtepec','Apartamento','150m^2','750000.00','15000.00','7');
 
 INSERT INTO propiedad(idPropiedad,Direccion,Tipo,Tamaño,Precio,PrecioAlquiler,idEmpleado)
-	VALUES('30','Av. Independencia no. 748, Col. Centro Tuxtepec','Casa','14500m^2','14500000.00','45000.00','8');
+	VALUES('30','Av. Independencia no. 748, Col. Centro Tuxtepec','Casa','1850m^2','14500000.00','45000.00','8');
     
 #INSERCCION DE VENTAS 
 INSERT INTO venta(idVenta,Comprador,Telefono,DireccionComprador,idEmpleado,FechaVenta,idPropiedad,PrecioInicial,PrecioFinal) 
@@ -248,7 +248,7 @@ values('13','C2000029BAS','Aldama no 1212, Lazaro Cardenas Tuxtepec','2291599420
 insert into alquiler(idAlquiler,DniTitular,Direccion,Telefono,FechaContrato,PrecioAlquiler,idPropiedad,FechaCobro,FechaPago)
 values('14','C2000028AMP','Independencia no 1231 a, La Piragua Tuxtepec','2291599419','2020-04-14','30000.00','24','2020-05-14','2020-05-15');
 insert into alquiler(idAlquiler,DniTitular,Direccion,Telefono,FechaContrato,PrecioAlquiler,idPropiedad,FechaCobro,FechaPago)
-values('15','C2000027ICT','Matamoros no 350,Centro Tuxtepec','2291599418','2020-04-15','50000.00','25','2020-05-15','2020-05-16');
+values('15','C2000027ICT','Matamoros no 350,Centro Tuxtepec','2291599418','2020-04-15','5000.00','25','2020-05-15','2020-05-16');
 insert into alquiler(idAlquiler,DniTitular,Direccion,Telefono,FechaContrato,PrecioAlquiler,idPropiedad,FechaCobro,FechaPago)
 values('16','C2000026ARB','Av. 20 de Noviembre no 1137, Centro Tuxtepec','2291599417','2020-04-16','15000.00','26','2020-05-16','2020-05-17');
 insert into alquiler(idAlquiler,DniTitular,Direccion,Telefono,FechaContrato,PrecioAlquiler,idPropiedad,FechaCobro,FechaPago)
@@ -281,6 +281,7 @@ INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('27','C2000036ADT');
 INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('28','C2000037VPC');
 INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('29','C2000038DBD');
 INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('30','C2000039VDM');
+select * from dueñospropiedad;
 
 #Inserccion de Visitas
 INSERT INTO visita(idVisita,idEmpleado,NombreCliente,Comentario,FechaVisita) 

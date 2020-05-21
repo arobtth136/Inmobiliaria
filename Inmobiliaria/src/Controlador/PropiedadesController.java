@@ -13,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -50,15 +48,17 @@ public class PropiedadesController extends Conexion {
                 rsAux.next();
                 propiedad.setEmpleado(rsAux.getString(1));
                 //Obtener los Dueños de la propiedad
-                int IdPropietario = rs.getInt(1);
+                int IdPropiedad = rs.getInt(1);
                 statement = con.prepareStatement("select DniDueño from DueñosPropiedad where idPropiedad = ?");
-                statement.setInt(1, IdPropietario);
+                statement.setInt(1, IdPropiedad);
                 rsAux = statement.executeQuery();
                 if (rsAux.next()) {
+                    System.out.println("La propiedad tiene dueños");
                     //Tiene dueños
-                    ArrayList<Integer> propietarios = new ArrayList<>();
+                    ArrayList<String> propietarios = new ArrayList<>();
                     while (rsAux.next()) {
-                        propietarios.add(rsAux.getInt(1));
+                        System.out.println("Dni: " + rsAux.getString(1));
+                        propietarios.add(rsAux.getString(1));
                     }
                     propiedad.setDueños(propietarios);
                     //La propiedad tiene dueños, debemos conocer si está vendida o rentada
@@ -75,6 +75,8 @@ public class PropiedadesController extends Conexion {
                     }
                 } else {
                     //La casa está disponible para la venta y omite el paso de conocer su estado
+                    System.out.println("La propiedad no tiene dueños");
+                    propiedad.setDueños(new ArrayList<>());
                     propiedad.setEstado("En venta");
                 }
                 propiedades.add(propiedad);
@@ -102,6 +104,33 @@ public class PropiedadesController extends Conexion {
             fila[3] = "$ " + propiedad.getPrecioAlquiler();
             fila[4] = propiedad.getEstado();
             modelo.addRow(fila);
+        }
+        return tabla;
+    }
+    
+    public JTable CargarPropietarios(JTable tabla, Propiedades propiedad){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre del propietario");
+        tabla.setModel(modelo);
+        if(!propiedad.getDueños().isEmpty()){
+            //Obtener los nombres de los dueños
+            ArrayList<String> dueños = new ArrayList<>();
+            for(String Dni : propiedad.getDueños()){
+                try {
+                    PreparedStatement statement; statement = con.prepareStatement("select Nombre from cliente where Dni = ?");
+                    statement.setString(1, Dni);
+                    ResultSet rs = statement.executeQuery();
+                    dueños.add(rs.getString(1));
+                } catch (SQLException ex) {
+                    Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            //meter los dueños a la tabla
+            for (String dueño : dueños) {
+            Object[] fila = new Object[1];
+            fila[0] = dueño;
+            modelo.addRow(fila);
+            }
         }
         return tabla;
     }
@@ -149,8 +178,8 @@ public class PropiedadesController extends Conexion {
         }
         return null;
     }
-
-    public void GuardarCambios(JPanel image, JTextField precioVenta, JTextField precioRenta, JTextArea direccion, JComboBox categoria, JTextField tamaño, int ID, int IdPropiedad) {
+    
+    public void GuardarCambios(JTextField precioVenta, JTextField precioRenta, JTextArea direccion, JComboBox categoria, JTextField tamaño, int ID, int IdPropiedad) {
         try {
             PreparedStatement statement = con.prepareStatement("update propiedad set Direccion = ?, Tipo = ?, Tamaño = ?, Precio = ?, PrecioAlquiler = ?, idEmpleado = ? where idPropiedad = ?");
             statement.setString(1, direccion.getText());

@@ -5,17 +5,27 @@
  */
 package Vista;
 
+import java.awt.CardLayout;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author Gerardo GC
  */
 public class vistaPrincipal extends javax.swing.JFrame {
-
+    CardLayout cardLayout;
+    ConsultaPropiedad consulta = new ConsultaPropiedad();
     /**
      * Creates new form vistaPrincipal
      */
     public vistaPrincipal() {
         initComponents();
+        cardLayout = (CardLayout) (this.PanelVistas.getLayout());
+        cardLayout.show(this.PanelVistas, "Consulta");
+        this.PanelVistas.add(consulta, "Consulta");
+        SwingUtilities.updateComponentTreeUI(this.PanelVistas);
+        this.repaint();
     }
 
     /**
@@ -30,14 +40,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnPropiedades = new javax.swing.JButton();
         btnPropConsulta = new javax.swing.JButton();
-        btnPropAlta = new javax.swing.JButton();
+        BtnNuevaPropiedad = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnClientAlta = new javax.swing.JButton();
         btnClientConsulta = new javax.swing.JButton();
         btnVendedores = new javax.swing.JButton();
         btnVendAlta = new javax.swing.JButton();
         btnVendConsulta = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        PanelVistas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -61,10 +71,15 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnPropAlta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnPropAlta.setForeground(new java.awt.Color(255, 255, 255));
-        btnPropAlta.setText("Gestionar");
-        btnPropAlta.setContentAreaFilled(false);
+        BtnNuevaPropiedad.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        BtnNuevaPropiedad.setForeground(new java.awt.Color(255, 255, 255));
+        BtnNuevaPropiedad.setText("Nueva");
+        BtnNuevaPropiedad.setContentAreaFilled(false);
+        BtnNuevaPropiedad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNuevaPropiedadActionPerformed(evt);
+            }
+        });
 
         btnClientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnClientes.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,16 +131,17 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnPropAlta)
-                        .addComponent(btnPropConsulta)
                         .addComponent(btnPropiedades)
                         .addComponent(btnClientAlta)
                         .addComponent(btnClientConsulta)
                         .addComponent(btnVendAlta)
-                        .addComponent(btnVendConsulta))
+                        .addComponent(btnVendConsulta)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnNuevaPropiedad)
+                            .addComponent(btnPropConsulta)))
                     .addComponent(btnClientes)
                     .addComponent(btnVendedores))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,9 +150,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnPropiedades)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPropConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(btnPropAlta)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
+                .addComponent(BtnNuevaPropiedad)
+                .addGap(27, 27, 27)
                 .addComponent(btnClientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClientConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,26 +169,17 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.WEST);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 811, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 753, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        PanelVistas.setBackground(new java.awt.Color(255, 255, 255));
+        PanelVistas.setLayout(new java.awt.CardLayout());
+        getContentPane().add(PanelVistas, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPropConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPropConsultaActionPerformed
         // TODO add your handling code here:
+        cardLayout.show(this.PanelVistas, "Consulta");
+        PanelVistas.repaint();
     }//GEN-LAST:event_btnPropConsultaActionPerformed
 
     private void btnClientConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientConsultaActionPerformed
@@ -182,6 +189,13 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void btnVendConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendConsultaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVendConsultaActionPerformed
+
+    private void BtnNuevaPropiedadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevaPropiedadActionPerformed
+        // TODO add your handling code here:
+        NuevaPropiedad nueva = new NuevaPropiedad();
+        nueva.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nueva.setVisible(true);
+    }//GEN-LAST:event_BtnNuevaPropiedadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,16 +233,16 @@ public class vistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnNuevaPropiedad;
+    private javax.swing.JPanel PanelVistas;
     private javax.swing.JButton btnClientAlta;
     private javax.swing.JButton btnClientConsulta;
     private javax.swing.JButton btnClientes;
-    private javax.swing.JButton btnPropAlta;
     private javax.swing.JButton btnPropConsulta;
     private javax.swing.JButton btnPropiedades;
     private javax.swing.JButton btnVendAlta;
     private javax.swing.JButton btnVendConsulta;
     private javax.swing.JButton btnVendedores;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

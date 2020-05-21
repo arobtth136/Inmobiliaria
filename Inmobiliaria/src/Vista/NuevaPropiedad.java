@@ -16,14 +16,32 @@ import javax.swing.JOptionPane;
 public class NuevaPropiedad extends javax.swing.JFrame {
     PropiedadesController controller = new PropiedadesController();
     private int IdEmpleado;
+    ConsultaPropiedad consulta = new ConsultaPropiedad();
     /**
      * Creates new form NuevaPropiedad
      */
     public NuevaPropiedad() {
         initComponents();
-        
+        Cargar();
+    }
+    
+    private void Cargar(){
+        Categorias = controller.CargarCategorias(Categorias);
     }
 
+    private void Limpiar(){
+        this.PrecioVenta.setText("");
+        this.PrecioRenta.setText("");
+        this.Direccion.setText("");
+        this.Tamaño.setText("");
+        this.Empleado.setText("");
+        this.IdEmpleado = 0;   
+    }
+    
+    public void GetVentanaConsulta(ConsultaPropiedad consulta) {
+        this.consulta = consulta;
+        System.out.println(consulta.toString());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,8 +69,12 @@ public class NuevaPropiedad extends javax.swing.JFrame {
         BtnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(698, 382));
         setSize(new java.awt.Dimension(698, 382));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         Background.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -95,8 +117,6 @@ public class NuevaPropiedad extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Dirección");
-
-        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Tamaño m2");
 
@@ -197,7 +217,7 @@ public class NuevaPropiedad extends javax.swing.JFrame {
                     if(!"".equals(Direccion.getText())){
                         if(!"".equals(Tamaño.getText())){
                             controller.NuevaPropiedad(Image, PrecioVenta, PrecioRenta, Direccion, Categorias, Tamaño, IdEmpleado);
-                            BtnGuardar.setEnabled(false);
+                            Limpiar();
                         } else {
                             JOptionPane.showMessageDialog(null, "El tamaño no debe estár vacío");
                         }
@@ -218,7 +238,7 @@ public class NuevaPropiedad extends javax.swing.JFrame {
     private void EmpleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmpleadoKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if ("".equals(this.Empleado.getText())) {
+            if (!"".equals(this.Empleado.getText())) {
                 //obtenemos el nombre
                 String nombre = controller.GetNombreEmpleado(Integer.parseInt(Empleado.getText()));
                 if (nombre == null) {
@@ -230,6 +250,11 @@ public class NuevaPropiedad extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_EmpleadoKeyPressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        consulta.ActualizarTabla();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

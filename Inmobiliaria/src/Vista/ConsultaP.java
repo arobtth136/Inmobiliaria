@@ -9,26 +9,23 @@ import Controlador.PropiedadesController;
 import Modelo.Propiedades;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author reymi
  */
-public class ConsultaPropiedad extends javax.swing.JPanel {
+public class ConsultaP extends javax.swing.JFrame {
     PropiedadesController controller = new PropiedadesController();
     ArrayList<Propiedades> propiedades;
 
     /**
-     * Creates new form NewJPanel
+     * Creates new form ConsultaP
      */
-    public ConsultaPropiedad() {
+    public ConsultaP() {
         initComponents();
-    }
-    
-    public JPanel GetPanel(){
-        return this;
+        propiedades = controller.CargarPropiedades();
+        this.TablaDatos = controller.CargarTabla(TablaDatos, propiedades);
     }
     
     public void ActualizarTabla() {
@@ -48,6 +45,7 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         Background = new javax.swing.JPanel();
         Buscar = new javax.swing.JTextField();
         Disponibles = new javax.swing.JRadioButton();
@@ -59,6 +57,8 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
         BtnEditar = new javax.swing.JButton();
         BtnNuevo = new javax.swing.JButton();
         Todas = new javax.swing.JRadioButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Background.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,18 +195,41 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 735, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 488, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void DisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisponiblesActionPerformed
@@ -254,7 +277,7 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
         editar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editar.SetPropiedad(propiedades.get(TablaDatos.getSelectedRow()));
         editar.Cargar();
-        //editar.GetVentanaConsulta(this);
+        editar.GetVentanaConsulta(this);
         editar.setVisible(true);
     }//GEN-LAST:event_BtnEditarActionPerformed
 
@@ -262,7 +285,7 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
         // TODO add your handling code here:
         NuevaPropiedad nueva = new NuevaPropiedad();
         nueva.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //nueva.GetVentanaConsulta(this);
+        nueva.GetVentanaConsulta(this);
         nueva.setVisible(true);
     }//GEN-LAST:event_BtnNuevoActionPerformed
 
@@ -275,6 +298,40 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
         TablaDatos.updateUI();
     }//GEN-LAST:event_TodasActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ConsultaP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ConsultaP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ConsultaP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ConsultaP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ConsultaP().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -287,6 +344,7 @@ public class ConsultaPropiedad extends javax.swing.JPanel {
     private javax.swing.JRadioButton Todas;
     private javax.swing.JRadioButton Vendidas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

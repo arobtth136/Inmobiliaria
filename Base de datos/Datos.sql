@@ -1,4 +1,5 @@
 use inmobilaria;
+select * from propiedad;
 # Inserccion de empleado
 INSERT INTO empleado(idEmpleado,Dni,Nombre,Direccion,FechaNacimiento,Telefono,Usuario)
 	VALUES('1','E2000000RGG','Roberta Gamboa Galindo','Blvd. Benito Juarez s/n, La Piragua Tuxtepec','1956-04-01',2293684040,'RobertaGamboa');
@@ -281,7 +282,7 @@ INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('27','C2000036ADT');
 INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('28','C2000037VPC');
 INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('29','C2000038DBD');
 INSERT INTO dueñospropiedad(idPropiedad,DniDueño) VALUES('30','C2000039VDM');
-select * from dueñospropiedad;
+select * from propiedad;
 
 #Inserccion de Visitas
 INSERT INTO visita(idVisita,idEmpleado,NombreCliente,Comentario,FechaVisita) 

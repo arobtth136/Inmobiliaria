@@ -14,9 +14,13 @@ import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -30,7 +34,7 @@ public class EditarPropiedad extends javax.swing.JFrame {
     PreparedStatement ps;
     Statement st;
     ResultSet rs;
-    ConsultaPropiedad consulta = new ConsultaPropiedad();
+    ConsultaP consulta = new ConsultaP();
 
     /**
      * Creates new form EditarPropiedad
@@ -45,8 +49,12 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
     public void Cargar() {
         lblEstado.setText(propiedad.getEstado());
+        if(propiedad.getEstado().equals("En venta")){
+            this.BtnNuevoContrato.setEnabled(true);
+            this.BtnEditarContrato.setEnabled(false);
+        }
         TxtEmpleado.setText(propiedad.getEmpleado());
-        PrecioVenta.setText(String.valueOf(propiedad.getPrecio()));
+        PrecioVenta.setText(String.valueOf(new DecimalFormat("#######").format(propiedad.getPrecio())));
         PrecioRenta.setText(String.valueOf(propiedad.getPrecioAlquiler()));
         TablaPropietarios = controller.CargarPropietarios(TablaPropietarios, propiedad);
         Direccion.setText(propiedad.getDireccion());
@@ -83,6 +91,8 @@ public class EditarPropiedad extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaPropietarios = new javax.swing.JTable();
         lblEstado = new javax.swing.JLabel();
+        BtnEditarContrato = new javax.swing.JButton();
+        BtnNuevoContrato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -152,6 +162,21 @@ public class EditarPropiedad extends javax.swing.JFrame {
         lblEstado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblEstado.setText("Estado");
 
+        BtnEditarContrato.setText("Editar contrato");
+        BtnEditarContrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEditarContratoActionPerformed(evt);
+            }
+        });
+
+        BtnNuevoContrato.setText("Nuevo contrato");
+        BtnNuevoContrato.setEnabled(false);
+        BtnNuevoContrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNuevoContratoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
@@ -164,14 +189,6 @@ public class EditarPropiedad extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtnGuardar))
-                        .addGap(18, 18, 18)
-                        .addComponent(Tamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4))
-                    .addGroup(backgroundLayout.createSequentialGroup()
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(TxtEmpleado)
                             .addComponent(PrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,20 +200,30 @@ public class EditarPropiedad extends javax.swing.JFrame {
                         .addComponent(PrecioRenta, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblEstado))
+                    .addComponent(lblEstado)
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnGuardar)
+                            .addComponent(BtnEditarContrato))
+                        .addGap(18, 18, 18)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnNuevoContrato)
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addComponent(Tamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE))
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addComponent(lblEstado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(52, 52, 52)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TxtEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
@@ -208,7 +235,11 @@ public class EditarPropiedad extends javax.swing.JFrame {
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PrecioRenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(102, 102, 102)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnEditarContrato)
+                            .addComponent(BtnNuevoContrato))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
@@ -280,8 +311,25 @@ public class EditarPropiedad extends javax.swing.JFrame {
         // TODO add your handling code here:
         consulta.ActualizarTabla();
     }//GEN-LAST:event_formWindowClosed
+
+    private void BtnEditarContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEditarContratoActionPerformed
+        // TODO add your handling code here:
+        EditarContrato editarContrato = new EditarContrato();
+        editarContrato.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        editarContrato.SetPropiedad(propiedad);
+        TableModel modelo = TablaPropietarios.getModel();
+        editarContrato.CargarTabla(modelo);
+        editarContrato.setVisible(true);
+    }//GEN-LAST:event_BtnEditarContratoActionPerformed
+
+    private void BtnNuevoContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoContratoActionPerformed
+        // TODO add your handling code here:
+        NuevoContrato nuevoContrato = new NuevoContrato();
+        nuevoContrato.SetPropiedad(propiedad);
+        nuevoContrato.setVisible(true);
+    }//GEN-LAST:event_BtnNuevoContratoActionPerformed
     
-    public void GetVentanaConsulta(ConsultaPropiedad consulta) {
+    public void GetVentanaConsulta(ConsultaP consulta) {
         this.consulta = consulta;
     }
 
@@ -323,7 +371,9 @@ public class EditarPropiedad extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnEditarContrato;
     private javax.swing.JButton BtnGuardar;
+    private javax.swing.JButton BtnNuevoContrato;
     private javax.swing.JComboBox<String> Categorias;
     private javax.swing.JTextArea Direccion;
     private javax.swing.JTextField PrecioRenta;

@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class NuevaPropiedad extends javax.swing.JFrame {
     PropiedadesController controller = new PropiedadesController();
     private int IdEmpleado;
-    ConsultaPropiedad consulta = new ConsultaPropiedad();
+    ConsultaP consulta = new ConsultaP();
     /**
      * Creates new form NuevaPropiedad
      */
@@ -38,7 +38,7 @@ public class NuevaPropiedad extends javax.swing.JFrame {
         this.IdEmpleado = 0;   
     }
     
-    public void GetVentanaConsulta(ConsultaPropiedad consulta) {
+    public void GetVentanaConsulta(ConsultaP consulta) {
         this.consulta = consulta;
         System.out.println(consulta.toString());
     }

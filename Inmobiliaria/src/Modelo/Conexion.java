@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 
 public class Conexion {
 
-    private final String base = "";
+    private final String base = "inmobilaria";
     private final String user = "root";
-    private final String password = "";
+    private final String password = "root1234";
     private final String url = "jdbc:mysql://localhost:3306/" + base;
 
     private com.mysql.jdbc.Connection con = null;

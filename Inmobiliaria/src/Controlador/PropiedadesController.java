@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -33,7 +36,7 @@ public class PropiedadesController extends Conexion {
     Statement consulta;
     ResultSet rs;
     PreparedStatement ps;
-    ArrayList<Propiedades> propiedades = new ArrayList<>(); 
+    ArrayList<Propiedades> propiedades = new ArrayList<>();
 
     public ArrayList<Propiedades> CargarPropiedades() {
         try {
@@ -53,14 +56,8 @@ public class PropiedadesController extends Conexion {
                 statement.setInt(1, IdPropiedad);
                 rsAux = statement.executeQuery();
                 if (rsAux.next()) {
-                    System.out.println("La propiedad tiene dueños");
-                    //Tiene dueños
-                    ArrayList<String> propietarios = new ArrayList<>();
-                    while (rsAux.next()) {
-                        System.out.println("Dni: " + rsAux.getString(1));
-                        propietarios.add(rsAux.getString(1));
-                    }
-                    propiedad.setDueños(propietarios);
+                    //Conseguir dueños de propiedad
+                    propiedad = GetDueños(propiedad);
                     //La propiedad tiene dueños, debemos conocer si está vendida o rentada
                     //Obtener el estado de la propiedad renta o vendida
                     statement = con.prepareStatement("select idAlquiler from alquiler where idPropiedad = ?");
@@ -75,7 +72,6 @@ public class PropiedadesController extends Conexion {
                     }
                 } else {
                     //La casa está disponible para la venta y omite el paso de conocer su estado
-                    System.out.println("La propiedad no tiene dueños");
                     propiedad.setDueños(new ArrayList<>());
                     propiedad.setEstado("En venta");
                 }
@@ -85,6 +81,22 @@ public class PropiedadesController extends Conexion {
             Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return propiedades;
+    }
+
+    public Propiedades GetDueños(Propiedades propiedad) {
+        try {
+            PreparedStatement statement = con.prepareStatement("select DniDueño from DueñosPropiedad where idPropiedad = ?");
+            statement.setInt(1, propiedad.getID());
+            ResultSet rs = statement.executeQuery();
+            ArrayList<String> propietarios = new ArrayList<>();
+            while (rs.next()) {;
+                propietarios.add(rs.getString(1));
+            }
+            propiedad.setDueños(propietarios);
+        } catch (SQLException ex) {
+            Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return propiedad;
     }
 
     public JTable CargarTabla(JTable tabla, ArrayList<Propiedades> propiedades) {
@@ -100,36 +112,36 @@ public class PropiedadesController extends Conexion {
             Object[] fila = new Object[5];
             fila[0] = propiedad.getDireccion();
             fila[1] = propiedad.getTipo();
-            fila[2] = "$ " + propiedad.getPrecio();
-            fila[3] = "$ " + propiedad.getPrecioAlquiler();
+            fila[2] = "$" + NumberFormat.getInstance().format(propiedad.getPrecio());
+            fila[3] = "$ " + NumberFormat.getInstance().format(propiedad.getPrecioAlquiler());
             fila[4] = propiedad.getEstado();
             modelo.addRow(fila);
         }
         return tabla;
     }
-    
-    public JTable CargarPropietarios(JTable tabla, Propiedades propiedad){
+
+    public JTable CargarPropietarios(JTable tabla, Propiedades propiedad) {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre del propietario");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Telefono");
         tabla.setModel(modelo);
-        if(!propiedad.getDueños().isEmpty()){
+        if (!propiedad.getDueños().isEmpty()) {
             //Obtener los nombres de los dueños
-            ArrayList<String> dueños = new ArrayList<>();
-            for(String Dni : propiedad.getDueños()){
+            for (String Dni : propiedad.getDueños()) {
                 try {
-                    PreparedStatement statement; statement = con.prepareStatement("select Nombre from cliente where Dni = ?");
+                    PreparedStatement statement;
+                    statement = con.prepareStatement("select Nombre, Telefono from cliente where Dni = ?");
                     statement.setString(1, Dni);
                     ResultSet rs = statement.executeQuery();
-                    dueños.add(rs.getString(1));
+                    Object[] fila = new Object[2];
+                    while (rs.next()) {
+                        fila[0] = rs.getString(1);
+                        fila[1] = rs.getString(2);
+                    }
+                    modelo.addRow(fila);
                 } catch (SQLException ex) {
                     Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            //meter los dueños a la tabla
-            for (String dueño : dueños) {
-            Object[] fila = new Object[1];
-            fila[0] = dueño;
-            modelo.addRow(fila);
             }
         }
         return tabla;
@@ -178,7 +190,7 @@ public class PropiedadesController extends Conexion {
         }
         return null;
     }
-    
+
     public void GuardarCambios(JTextField precioVenta, JTextField precioRenta, JTextArea direccion, JComboBox categoria, JTextField tamaño, int ID, int IdPropiedad) {
         try {
             PreparedStatement statement = con.prepareStatement("update propiedad set Direccion = ?, Tipo = ?, Tamaño = ?, Precio = ?, PrecioAlquiler = ?, idEmpleado = ? where idPropiedad = ?");
@@ -191,7 +203,7 @@ public class PropiedadesController extends Conexion {
             statement.setInt(7, IdPropiedad);
             statement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Propiedad Actualizada");
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -208,6 +220,80 @@ public class PropiedadesController extends Conexion {
             statement.setInt(6, ID);
             statement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Propiedad registrada");
+        } catch (SQLException ex) {
+            Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void AgregarPropietario(JTextField Dni, Propiedades propiedad) {
+        try {
+            PreparedStatement statement = con.prepareStatement("insert into dueñospropiedad(idPropiedad,DniDueño) values (?, ?)");
+            statement.setInt(1, propiedad.getID());
+            statement.setString(2, Dni.getText());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "El DNI no existe, registrelo antes de añadirlo al contrato");
+        }
+    }
+
+    public void EliminarContrato(Propiedades propiedad) {
+        PreparedStatement statement;
+        try {
+            statement = con.prepareStatement("delete from dueñospropiedad where idPropiedad = ?");
+            statement.setInt(1, propiedad.getID());
+            statement.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Contrato cancelado");
+        } catch (SQLException ex) {
+            Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
+    public TableModel TablaPropietarios(TableModel tabla, String Dni) {
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Telefono");
+            PreparedStatement statement;
+            statement = con.prepareStatement("select Nombre, Telefono from cliente where Dni = ?");
+            statement.setString(1, Dni);
+            ResultSet rs = statement.executeQuery();
+            Object[] fila = new Object[2];
+            while (rs.next()) {
+                fila[0] = rs.getString(1);
+                fila[1] = rs.getString(2);
+            }
+            modelo.addRow(fila);
+            return modelo;
+        } catch (SQLException ex) {
+            Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Este Dni no existe");
+        }
+        return tabla;
+    }
+    
+    public int GetIdCliente(String nombre){
+        try {
+            PreparedStatement statement = con.prepareStatement("select idCliente from cliente where Nombre = ?");
+            statement.setString(1, nombre);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public void InsertarVenta(String Cliente, Propiedades propiedad){
+        try {
+            PreparedStatement statement = con.prepareStatement("insert into venta(idComprador, idEmpleado, FechaVenta, idPropiedad, PrecioInicial, PrecioFinal)"
+                    + "values(?,?,?,?,?,?)");
+            statement.setInt(1, GetIdCliente(Cliente));
+            statement.setInt(1, 0);
+            statement.setDate(1, java.time.LocalDate.now());
         } catch (SQLException ex) {
             Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -10,6 +10,10 @@ import Modelo.Propiedades;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -18,6 +22,7 @@ import javax.swing.ListSelectionModel;
 public class ConsultaP extends javax.swing.JFrame {
     PropiedadesController controller = new PropiedadesController();
     ArrayList<Propiedades> propiedades;
+    TableRowSorter<TableModel> Filtro;
 
     /**
      * Creates new form ConsultaP
@@ -34,6 +39,13 @@ public class ConsultaP extends javax.swing.JFrame {
         this.TablaDatos = controller.CargarTabla(TablaDatos, propiedades);
         TablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablaDatos.updateUI();
+    }
+    
+    private void filter(String busqueda){
+        DefaultTableModel modelo = (DefaultTableModel) TablaDatos.getModel();
+        Filtro = new TableRowSorter<TableModel>(modelo);
+        TablaDatos.setRowSorter(Filtro);
+        Filtro.setRowFilter(RowFilter.regexFilter(busqueda, 0));
     }
 
     /**
@@ -63,6 +75,14 @@ public class ConsultaP extends javax.swing.JFrame {
         Background.setBackground(new java.awt.Color(255, 255, 255));
 
         Buscar.setToolTipText("Buscar propiedad");
+        Buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BuscarKeyReleased(evt);
+            }
+        });
 
         Disponibles.setBackground(new java.awt.Color(255, 255, 255));
         Disponibles.setText("Disponibles");
@@ -93,20 +113,20 @@ public class ConsultaP extends javax.swing.JFrame {
 
         TablaDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Dirección", "Tipo", "Costo de venta", "Costo de renta", "Estado"
+                "Dirección", "Tipo", "Costo de venta", "Costo de renta", "Estado", "Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -297,6 +317,15 @@ public class ConsultaP extends javax.swing.JFrame {
         TablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablaDatos.updateUI();
     }//GEN-LAST:event_TodasActionPerformed
+
+    private void BuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscarKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscarKeyPressed
+
+    private void BuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscarKeyReleased
+        // TODO add your handling code here:
+        filter(Buscar.getText());
+    }//GEN-LAST:event_BuscarKeyReleased
 
     /**
      * @param args the command line arguments

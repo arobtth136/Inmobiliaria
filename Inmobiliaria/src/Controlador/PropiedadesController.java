@@ -101,6 +101,7 @@ public class PropiedadesController extends Conexion {
 
     public JTable CargarTabla(JTable tabla, ArrayList<Propiedades> propiedades) {
         DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
         modelo.addColumn("Dirección");
         modelo.addColumn("Tipo");
         modelo.addColumn("Costo de venta");
@@ -109,12 +110,13 @@ public class PropiedadesController extends Conexion {
         tabla.setModel(modelo);
         //Creamos el objeto para la tabla
         for (Propiedades propiedad : propiedades) {
-            Object[] fila = new Object[5];
-            fila[0] = propiedad.getDireccion();
-            fila[1] = propiedad.getTipo();
-            fila[2] = "$" + NumberFormat.getInstance().format(propiedad.getPrecio());
-            fila[3] = "$ " + NumberFormat.getInstance().format(propiedad.getPrecioAlquiler());
-            fila[4] = propiedad.getEstado();
+            Object[] fila = new Object[6];
+            fila[0] = propiedad.getID();
+            fila[1] = propiedad.getDireccion();
+            fila[2] = propiedad.getTipo();
+            fila[3] = "$" + NumberFormat.getInstance().format(propiedad.getPrecio());
+            fila[4] = "$ " + NumberFormat.getInstance().format(propiedad.getPrecioAlquiler());
+            fila[5] = propiedad.getEstado();
             modelo.addRow(fila);
         }
         return tabla;
@@ -293,7 +295,6 @@ public class PropiedadesController extends Conexion {
                     + "values(?,?,?,?,?,?)");
             statement.setInt(1, GetIdCliente(Cliente));
             statement.setInt(1, 0);
-            statement.setDate(1, java.time.LocalDate.now());
         } catch (SQLException ex) {
             Logger.getLogger(PropiedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }
